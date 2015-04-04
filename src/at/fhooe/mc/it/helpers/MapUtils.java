@@ -39,7 +39,7 @@ public class MapUtils {
 
         ListIterator li = list.listIterator(list.size());
 
-        // reverse order
+        // reverse order (1 to 0)
         while(li.hasPrevious())
         {
             Map.Entry<String, Float> entry = (Map.Entry<String, Float>) li.previous();

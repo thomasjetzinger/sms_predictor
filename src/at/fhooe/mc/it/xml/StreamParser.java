@@ -74,7 +74,7 @@ public class StreamParser {
      */
     private static void parseLine(String _line, SmsData _smsData) {
         if(_line != null && _line.length() > 0) {
-            // remove numbers and point, convert to lower case
+            // remove numbers and points, convert to lower case
             _line = _line.replaceAll("[\\d.]", " ").toLowerCase();
 
             // omit empty space
@@ -87,7 +87,7 @@ public class StreamParser {
     }
 
     /**
-     * Orders the word
+     * Orders the words
      * @param _smsData
      */
     private static void orderWords(SmsData _smsData) {

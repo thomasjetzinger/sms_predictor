@@ -24,14 +24,20 @@ public class WordEntry extends Entry {
     public void addWord(String _word) {
         Float value = mOtherWords.get(_word);
 
+        // First next word?
         if (value == null)
             mOtherWords.put(_word, 1f);
         else
+            // increment word counter
             mOtherWords.put(_word, value.floatValue() + 1);
 
+        // overall next word counter for the this word
         mCount++;
     }
 
+    /**
+     * Orders the word (from 1 to 0) and calc P from the word frequency
+     */
     public void order() {
         mOtherWords = MapUtils.sortByValueAndCalcP(mOtherWords, mCount);
     }
