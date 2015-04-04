@@ -7,9 +7,11 @@ import java.beans.PropertyChangeListener;
 
 public class MainController implements PropertyChangeListener {
     private MainModel mMainModel;
+
     @FXML
     private void onReadFileButton() {
-
+        if(mMainModel != null)
+            mMainModel.readFile("data/smsCorpus_en_2015.03.09_all.xml");
     }
 
     @Override
