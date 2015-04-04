@@ -10,10 +10,15 @@ import java.util.HashMap;
 public class WordEntry extends Entry {
     private String mWord;
     private HashMap<String, Float> mOtherWords;
+    private int mCount = 0;
 
     public WordEntry(String _word) {
         mWord = _word;
         mOtherWords = new HashMap<>();
+    }
+
+    public int getCount() {
+        return mCount;
     }
 
     public void addWord(String _word) {
@@ -23,9 +28,11 @@ public class WordEntry extends Entry {
             mOtherWords.put(_word, 1f);
         else
             mOtherWords.put(_word, value.floatValue() + 1);
+
+        mCount++;
     }
 
     public void order() {
-        mOtherWords = MapUtils.sortByValue(mOtherWords);
+        mOtherWords = MapUtils.sortByValueAndCalcP(mOtherWords, mCount);
     }
 }
