@@ -8,24 +8,24 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    private MainModel mMainModel;
+  private MainModel mMainModel;
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        mMainModel = new MainModel();
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    mMainModel = new MainModel();
 
-        FXMLLoader fxmlLoader =  new FXMLLoader(getClass().getResource("ui.fxml"));
-        Parent root = fxmlLoader.load();
-        MainController mainController = fxmlLoader.getController();
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ui.fxml"));
+    Parent root = fxmlLoader.load();
+    MainController mainController = fxmlLoader.getController();
+    primaryStage.setTitle("Hello World");
+    primaryStage.setScene(new Scene(root, 300, 275));
+    primaryStage.show();
 
-        mainController.setMainModel(mMainModel);
-    }
+    mainController.setMainModel(mMainModel);
+  }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+  public static void main(String[] args) {
+    launch(args);
+  }
 }
