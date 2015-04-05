@@ -63,11 +63,13 @@ public class MainController implements PropertyChangeListener {
         boolean writeFullWord = writtenText.endsWith(" ");
         if (!writeFullWord) {
           //TODO don't add whole word
-        } else {
-          mLastWord = recommendedWord;
-          mTextFieldInput.setText(writtenText + recommendedWord + " ");
-          mTextFieldInput.positionCaret(mTextFieldInput.getLength());
+          int lastWordStart = writtenText.lastIndexOf(" ");
+          writtenText = writtenText.substring(0, lastWordStart + 1);
         }
+        mLastWord = recommendedWord;
+        mTextFieldInput.setText(writtenText + recommendedWord + " ");
+        mTextFieldInput.positionCaret(mTextFieldInput.getLength());
+
       }
     });
   }
@@ -88,24 +90,39 @@ public class MainController implements PropertyChangeListener {
 
     mTextFieldInput.textProperty().addListener((observable, oldValue, newValue) -> {
       boolean needNextWord = newValue.endsWith(" ");
+      boolean firstChar = oldValue.length() == 0;
+      boolean newWordStarted = oldValue.endsWith(" ") || firstChar;
       //Suggest next word
       if (needNextWord) {
         boolean enteredOneChar = oldValue.length() + 1 == newValue.length();
         if (enteredOneChar) {
           //when -1, it gets 0 and word starts at beginning
           int wordStart = oldValue.lastIndexOf(" ") + 1;
-          String lastWord = oldValue.substring(wordStart);
-          mLastWord = lastWord;
+          mLastWord = oldValue.substring(wordStart);
         }
         List<String> bestWords = mMainModel.getSuggestedWords(mLastWord.toLowerCase(), 3);
         if (!bestWords.isEmpty()) {
           updateWordLabels(bestWords);
         }
-      } else {
+      } else if (newWordStarted) {
         //Suggest to finish the word
-
+        Character startChar = newValue.charAt(newValue.length() - 1);
+        boolean isUpperCase = Character.isUpperCase(startChar);
+        List<String> bestWords = mMainModel.getSuggestedWords(Character.toLowerCase(startChar), 3);
+        if (!bestWords.isEmpty()) {
+          updateWordLabels(isUpperCase ? capitalizeWords(bestWords) : bestWords);
+        }
       }
     });
+  }
+
+  public List<String> capitalizeWords(List<String> words) {
+    List<String> res = new ArrayList<>();
+    for (String curWord : words) {
+      String capitalizedWord = Character.toUpperCase(curWord.charAt(0)) + curWord.substring(1);
+      res.add(capitalizedWord);
+    }
+    return res;
   }
 
 

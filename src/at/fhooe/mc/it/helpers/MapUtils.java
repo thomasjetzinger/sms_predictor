@@ -1,8 +1,5 @@
 package at.fhooe.mc.it.helpers;
 
-import at.fhooe.mc.it.data.Entry;
-
-import javax.print.DocFlavor;
 import java.util.*;
 
 /**

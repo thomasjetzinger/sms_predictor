@@ -45,4 +45,14 @@ public class MainModel {
     boolean longList = suggestedWords.size() > n;
     return longList ? suggestedWords.subList(0, n) : suggestedWords;
   }
+
+  public List<String> getSuggestedWords(Character startChar, int n) {
+    WordEntry wordEntry = mSmsData.getCharEntries().get(startChar);
+    if (wordEntry == null) {
+      return new ArrayList<>();
+    }
+    List<String> suggestedWords = wordEntry.getSuggestedWords();
+    boolean longList = suggestedWords.size() > n;
+    return longList ? suggestedWords.subList(0, n) : suggestedWords;
+  }
 }

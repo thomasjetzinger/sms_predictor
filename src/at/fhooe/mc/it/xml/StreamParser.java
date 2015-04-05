@@ -1,7 +1,6 @@
 package at.fhooe.mc.it.xml;
 
 
-import at.fhooe.mc.it.data.Entry;
 import at.fhooe.mc.it.data.SmsData;
 import at.fhooe.mc.it.data.WordEntry;
 
@@ -24,9 +23,6 @@ public class StreamParser {
      * @return
      */
     public static boolean parse(final String _path, SmsData _smsData) {
-
-        final HashMap<String, Entry> words = new HashMap<>();
-
         try {
             // First, create a new XMLInputFactory
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -82,6 +78,7 @@ public class StreamParser {
 
             for(int i = 0; i < words.length - 1; i++) {
                 _smsData.addWord(words[i], words[i+1]);
+                _smsData.addCharacterEntry(words[i+1]);
             }
         }
     }
@@ -94,5 +91,8 @@ public class StreamParser {
         _smsData.getWords().values().parallelStream().forEach(
                 entry -> entry.order()
         );
+      _smsData.getCharEntries().values().parallelStream().forEach(
+                entry -> entry.order()
+      );
     }
 }

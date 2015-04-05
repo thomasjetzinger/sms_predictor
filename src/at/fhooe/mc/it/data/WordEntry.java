@@ -9,13 +9,11 @@ import java.util.List;
 /**
  * Created by Thomas Jetzinger on 04/04/2015.
  */
-public class WordEntry extends Entry {
-  private String mWord;
+public class WordEntry {
   private HashMap<String, Float> mOtherWords;
   private int mCount = 0;
 
-  public WordEntry(String _word) {
-    mWord = _word;
+  public WordEntry() {
     mOtherWords = new HashMap<>();
   }
 
