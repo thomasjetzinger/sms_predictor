@@ -2,6 +2,7 @@ package at.fhooe.mc.it;
 
 import at.fhooe.mc.it.data.SmsData;
 import at.fhooe.mc.it.data.WordEntry;
+import at.fhooe.mc.it.ui.Toast;
 import at.fhooe.mc.it.xml.StreamParser;
 
 import java.beans.PropertyChangeListener;
@@ -25,15 +26,8 @@ public class MainModel {
     this.pcs.removePropertyChangeListener(listener);
   }
 
-  public void readFile(String _fileName) {
-    try {
-      System.out.println("Started reading");
-      StreamParser.parse(_fileName, mSmsData);
-      System.out.println("Finished reading");
-
-    } catch (Exception _ex) {
-      _ex.printStackTrace();
-    }
+  public boolean readFile(String _fileName) {
+    return StreamParser.parse(_fileName, mSmsData);
   }
 
   public List<String> getSuggestedWords(String previousWord, int n) {

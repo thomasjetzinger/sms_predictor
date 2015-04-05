@@ -1,10 +1,12 @@
 package at.fhooe.mc.it;
 
+import at.fhooe.mc.it.ui.Toast;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Duration;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -26,9 +28,25 @@ public class MainController implements PropertyChangeListener {
   private Label mWord3;
 
   @FXML
+  private Label mToastPlaceHolder;
+
+  @FXML
   private void onReadFileButton() {
     if (mMainModel != null) {
-      mMainModel.readFile("data/smsCorpus_en_2015.03.09_all.xml");
+      //TODO make it work
+      Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+          boolean parsed = mMainModel.readFile("data/smsCorpus_en_2015.03.09_all.xml");
+          String msg = parsed ? "SmsCorpus Loaded" : "Loading failed!";
+          Toast toast = new Toast();
+          toast.setContent(new Label(msg));
+          toast.setDuration(Duration.INDEFINITE);
+          toast.show(mToastPlaceHolder.getScene().getWindow());
+        }
+      };
+      Thread thread = new Thread(runnable);
+      thread.run();
     } else {
       System.err.println("MainModel was null when reading");
     }
@@ -75,9 +93,9 @@ public class MainController implements PropertyChangeListener {
   }
 
   private void updateWordLabels(List<String> words) {
-    mWord1.setText(words.get(0));
-    mWord2.setText(words.get(1));
-    mWord3.setText(words.get(2));
+    mWord1.setText(words.size() >= 1 ? words.get(0) : "");
+    mWord2.setText(words.size() >= 2 ? words.get(1) : "");
+    mWord3.setText(words.size() >= 3 ? words.get(2) : "");
   }
 
   private final List<String> mEnteredWords = new ArrayList<String>();
