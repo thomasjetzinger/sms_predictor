@@ -17,11 +17,12 @@ public class Main extends Application {
     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ui.fxml"));
     Parent root = fxmlLoader.load();
     MainController mainController = fxmlLoader.getController();
-    primaryStage.setTitle("Hello World");
+    primaryStage.setTitle("SMS Predictor V1");
     primaryStage.setScene(new Scene(root, 300, 275));
     primaryStage.show();
 
     mainController.setMainModel(mMainModel);
+    mainController.setPrimaryStage(primaryStage);
   }
 
 
